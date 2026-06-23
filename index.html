@@ -1,0 +1,891 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>تعمير البيداء للتجارة والمقاولات</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Cairo:wght@400;500;600;700;800;900&family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+img{display:block;max-width:100%}
+a{text-decoration:none;color:inherit}
+ul{list-style:none}
+svg{display:block}
+
+:root{
+  --gold-800:#4E3900; --gold-700:#7E5A08; --gold-600:#B48116; --gold-500:#D6A33A;
+  --gold-400:#E4BA5A; --gold-300:#F1D792; --gold-200:#F8E8BD; --gold-100:#FCF3DA; --gold-50:#FFF9EC;
+  --clay-600:#9C6B3E; --clay-200:#E8D4BC;
+  --navy:#071423; --navy-2:#0C2035; --navy-3:#143452;
+  --ink:#071423; --ink2:#102337; --ink3:#364C60; --ink4:#7C8995;
+  --paper:#FFFCF5; --paper-alt:#F5EFE1;
+  --line:#E6D8B8; --line2:#EFE5CC;
+  --cream:rgba(255,252,244,.94); --on-ink:rgba(255,252,244,.72); --on-ink-dim:rgba(255,252,244,.5);
+
+  --font-d:'Amiri',serif;
+  --font-k:'Cairo',sans-serif;
+  --font-b:'Tajawal',sans-serif;
+
+  --r:3px; --r-lg:5px; --r-full:999px;
+  --sh-xs:0 1px 3px rgba(6,21,36,.06);
+  --sh-sm:0 4px 18px rgba(6,21,36,.08);
+  --sh-md:0 12px 34px rgba(6,21,36,.11);
+
+  --ease:cubic-bezier(.4,0,.2,1);
+  --dur:.3s;
+}
+
+html{scroll-behavior:smooth;scroll-padding-top:96px}
+body{font-family:var(--font-b);color:var(--ink);background:radial-gradient(circle at 88% 0,rgba(214,163,58,.18),transparent 28rem),radial-gradient(circle at 8% 18rem,rgba(7,20,35,.06),transparent 24rem),linear-gradient(180deg,var(--paper),#F8F1E2);overflow-x:hidden;-webkit-font-smoothing:antialiased}
+*:focus-visible{outline:2px solid var(--gold-500);outline-offset:3px}
+
+/* ══ certificate frame ══ */
+.page-frame{display:none}
+.page-frame::before{content:"";position:absolute;inset:7px;border:1px solid rgba(211,162,51,.16)}
+@media(max-width:900px){.page-frame{display:none}}
+
+/* ══ progress ══ */
+#prog{position:fixed;top:0;left:0;right:0;height:2px;z-index:9999;background:linear-gradient(90deg,var(--gold-800),var(--gold-500));width:0}
+
+/* ══ frieze motif (Najdi merlon pattern) ══ */
+.frieze{display:none}
+.frieze-top{margin-top:66px;background-size:22px 13px}
+.frieze-foot{position:absolute;top:0;left:50%;background-size:22px 13px}
+
+/* ══ nav ══ */
+.nav{position:fixed;top:0;left:0;right:0;width:100%;z-index:800;height:88px;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(20px,5vw,80px);background:rgba(255,252,245,.98);border-bottom:1px solid rgba(214,163,58,.28);box-shadow:0 14px 34px rgba(7,20,35,.08);backdrop-filter:blur(18px);transition:background .3s var(--ease),border-color .3s var(--ease),box-shadow .3s var(--ease)}
+.nav::after{content:"";position:absolute;inset-inline:0;bottom:-1px;height:2px;background:linear-gradient(90deg,transparent,var(--gold-500),transparent);opacity:.9;pointer-events:none}
+.nav.scrolled{background:rgba(255,252,245,.99);border-bottom-color:rgba(214,163,58,.34);box-shadow:0 16px 38px rgba(7,20,35,.1)}
+.brand{display:flex;align-items:center;gap:13px;min-width:max-content}
+.brand-logo{width:178px;height:76px;display:flex;align-items:center;justify-content:center;padding:0;overflow:visible}
+.brand-logo img{width:178px;height:178px;max-width:none;object-fit:contain;transform:none;transform-origin:center}
+.seal{border-radius:50%;background:var(--ink);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.seal-sm{width:38px;height:38px;box-shadow:0 0 0 3px var(--paper),0 0 0 4px var(--gold-400)}
+.seal-sm svg{width:19px;height:19px;color:var(--gold-300)}
+.nav-actions{display:flex;align-items:center;gap:10px}
+.nav-links{display:flex;align-items:center;gap:4px}
+.nav-links a{padding:9px 15px;font-size:.86rem;font-weight:700;color:var(--ink3);font-family:var(--font-k);position:relative;border-radius:var(--r-full);transition:background var(--dur) var(--ease),color var(--dur) var(--ease)}
+.nav-links a:not(.nav-cta)::after{content:"";position:absolute;inset-inline:15px;bottom:4px;height:1px;background:var(--gold-600);transform:scaleX(0);transition:transform var(--dur) var(--ease)}
+.nav-links a:not(.nav-cta):hover::after{transform:scaleX(1)}
+.nav-links a:not(.nav-cta):hover{color:var(--ink);background:rgba(214,163,58,.1)}
+.nav-cta{margin-inline-start:6px;padding:10px 22px!important;background:linear-gradient(135deg,var(--ink),var(--navy-3))!important;color:var(--gold-200)!important;font-weight:800!important;border:1px solid var(--gold-500);border-radius:var(--r-full);box-shadow:0 10px 24px rgba(7,20,35,.13);transition:background var(--dur) var(--ease),color var(--dur) var(--ease),transform var(--dur) var(--ease)}
+.nav-cta:hover{background:var(--gold-700)!important;color:var(--paper)!important;transform:translateY(-1px)}
+.lang-toggle{border:1px solid rgba(211,162,51,.42);background:rgba(255,255,255,.54);color:var(--ink);border-radius:var(--r-full);padding:4px;display:flex;gap:3px;box-shadow:var(--sh-xs)}
+.lang-toggle button{border:0;background:transparent;color:var(--ink3);font-family:var(--font-k);font-size:.72rem;font-weight:800;padding:7px 12px;border-radius:var(--r-full);cursor:pointer}
+.lang-toggle button.active{background:var(--ink);color:var(--gold-200)}
+
+/* ══ hero ══ */
+.hero{padding:118px clamp(20px,5vw,80px) 96px;background:linear-gradient(135deg,rgba(7,20,35,.08),rgba(214,163,58,.14) 46%,rgba(255,252,245,.94));position:relative;overflow:hidden}
+.hero::before{content:"";position:absolute;inset:22px clamp(20px,5vw,80px);border:1px solid rgba(211,162,51,.22);border-radius:10px;pointer-events:none;z-index:1}
+.hero::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(255,252,245,.97),rgba(255,252,245,.86) 50%,rgba(255,252,245,.52));pointer-events:none;z-index:0}
+.hero-bg{position:absolute;inset:0;z-index:0;overflow:hidden}
+.hero-bg img{width:100%;height:100%;object-fit:cover;filter:saturate(.9) contrast(1.02);opacity:.44}
+.hero-bg::after{content:"";position:absolute;inset:0;backdrop-filter:blur(1.5px);background:linear-gradient(180deg,rgba(255,252,245,.24),rgba(245,239,225,.58))}
+.hero-inner{max-width:860px;margin:auto;text-align:center;display:flex;flex-direction:column;align-items:center;position:relative;z-index:2}
+.hero-tag{font-family:var(--font-k);font-size:.78rem;font-weight:700;color:var(--gold-700);display:flex;align-items:center;gap:9px;margin-bottom:30px}
+.hero-tag i{color:var(--gold-400);font-style:normal}
+h1{font-family:var(--font-d);font-size:clamp(2.3rem,4.6vw,3.6rem);font-weight:700;line-height:1.45;color:var(--ink);margin-bottom:22px}
+h1 span{display:block;color:var(--gold-700)}
+.hero-p{font-size:1rem;line-height:2.05;color:var(--ink3);max-width:540px;margin-bottom:34px}
+.orn-rule{display:flex;align-items:center;gap:14px;width:100%;max-width:360px;margin-bottom:34px}
+.orn-rule span{flex:1;height:1px;background:var(--line)}
+.orn-rule i{color:var(--gold-500);font-style:normal;font-size:.8rem}
+.ledger{display:flex;width:100%;max-width:680px;border:1px solid rgba(211,162,51,.28);border-radius:10px;padding:22px 0;margin-bottom:36px;background:rgba(255,252,244,.72);box-shadow:var(--sh-sm);backdrop-filter:blur(10px)}
+.ledger-item{flex:1;text-align:center;position:relative;padding:0 14px}
+.ledger-item:not(:last-child)::after{content:"";position:absolute;inset-inline-end:0;top:8%;bottom:8%;width:1px;background:var(--line)}
+.ledger-n{font-family:var(--font-d);font-size:2rem;font-weight:700;color:var(--gold-700);display:block}
+.ledger-l{font-size:.78rem;font-weight:500;color:var(--ink3);display:block;margin-top:5px;line-height:1.5}
+.hero-btns{display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
+.btn-primary,.btn-ghost{display:inline-flex;align-items:center;gap:8px;padding:14px 30px;font-weight:700;font-size:.88rem;font-family:var(--font-k);border-radius:var(--r);transition:background var(--dur) var(--ease),color var(--dur) var(--ease),border-color var(--dur) var(--ease)}
+.btn-primary{background:linear-gradient(135deg,var(--ink),var(--navy-3));color:var(--gold-200);border:1px solid var(--gold-500);box-shadow:0 14px 30px rgba(7,20,35,.16)}
+.btn-primary:hover{background:linear-gradient(135deg,var(--gold-700),var(--gold-500));color:var(--ink)}
+.btn-ghost{background:rgba(255,255,255,.58);border:1px solid rgba(214,163,58,.35);color:var(--ink2);backdrop-filter:blur(10px)}
+.btn-ghost:hover{border-color:var(--gold-500);color:var(--gold-700);background:#fff}
+
+/* ══ partners strip ══ */
+.partners{background:linear-gradient(90deg,rgba(7,20,35,.96),rgba(20,52,82,.96));border-top:1px solid rgba(214,163,58,.34);border-bottom:1px solid rgba(214,163,58,.34);padding:28px clamp(20px,5vw,80px);text-align:center}
+.partners-wrap{max-width:1120px;margin:auto}
+.partners-title{font-family:var(--font-k);font-size:.78rem;font-weight:800;color:var(--gold-300);margin-bottom:16px}
+.partners-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.partner-card{min-height:92px;border:1px solid rgba(214,163,58,.28);border-radius:14px;background:rgba(255,252,245,.96);display:flex;align-items:center;justify-content:center;padding:16px 20px;box-shadow:0 12px 28px rgba(0,0,0,.12)}
+.partner-card img{max-width:100%;max-height:58px;object-fit:contain}
+.partner-card:has(.logo-tourism){overflow:visible}
+.partner-card img.logo-tourism{max-height:104px;max-width:132%;transform:scale(1.85)}
+
+/* ══ shared section ══ */
+.sec{padding:96px clamp(20px,5vw,80px)}
+.sec-alt{background:var(--paper-alt)}
+.sec-ink{background:linear-gradient(135deg,rgba(7,20,35,.94),rgba(12,32,53,.92)),url("images/Hallway.png") center/cover;position:relative;overflow:hidden}
+.sec-ink::before{content:"";position:absolute;inset:0;backdrop-filter:blur(1px);background:linear-gradient(90deg,rgba(7,20,35,.9),rgba(7,20,35,.6));pointer-events:none}
+.sec-ink>.wrap{position:relative;z-index:1}
+.wrap{max-width:1240px;margin:auto}
+.sec-eyebrow{font-family:var(--font-k);font-size:.74rem;font-weight:800;color:var(--gold-600);margin-bottom:12px}
+.sec-h2{font-family:var(--font-d);font-size:clamp(1.9rem,3.4vw,2.8rem);font-weight:700;line-height:1.4;color:var(--ink)}
+.sec-h2 strong{color:var(--gold-700)}
+.sec-ink .sec-eyebrow{color:var(--gold-400)}
+.sec-ink .sec-h2{color:var(--cream)}
+.sec-ink .sec-h2 strong{color:var(--gold-300)}
+.sec-p{font-size:.95rem;line-height:2.05;color:var(--ink3);max-width:480px;margin-top:14px}
+.sec-ink .sec-p{color:var(--on-ink)}
+.sec-head{display:grid;grid-template-columns:.48fr .52fr;gap:40px;align-items:end;margin-bottom:52px}
+
+.div-orn{display:flex;align-items:center;justify-content:center;gap:16px;padding:0 clamp(20px,5vw,80px)}
+.div-orn span{flex:1;max-width:340px;height:1px;background:var(--line)}
+.div-orn i{color:var(--gold-500);font-style:normal;font-size:.85rem}
+
+/* corner brackets (certificate frame device) */
+.bracketed{position:relative}
+.bracketed::before,.bracketed::after{content:"";position:absolute;width:13px;height:13px;pointer-events:none}
+.bracketed::before{inset-inline-start:-1px;top:-1px;border-top:1.5px solid var(--gold-500);border-inline-start:1.5px solid var(--gold-500)}
+.bracketed::after{inset-inline-end:-1px;bottom:-1px;border-bottom:1.5px solid var(--gold-500);border-inline-end:1.5px solid var(--gold-500)}
+
+/* ══ services (charter grid) ══ */
+.svc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.svc{background:linear-gradient(180deg,#fff,var(--paper));border:1px solid rgba(214,163,58,.18);border-radius:12px;padding:30px 26px;box-shadow:var(--sh-xs);transition:border-color var(--dur) var(--ease),transform var(--dur) var(--ease),box-shadow var(--dur) var(--ease)}
+.svc:hover{border-color:var(--gold-500);transform:translateY(-4px);box-shadow:var(--sh-sm)}
+.svc-ico{width:50px;height:50px;border:1px solid var(--line);border-radius:var(--r);display:flex;align-items:center;justify-content:center;margin-bottom:20px;color:var(--gold-700);background:var(--paper-alt)}
+.svc-ico svg{width:25px;height:25px}
+.svc h3{font-family:var(--font-d);font-size:1.12rem;font-weight:700;color:var(--ink);margin-bottom:10px;line-height:1.5}
+.svc p{font-size:.85rem;line-height:1.95;color:var(--ink3)}
+.svc-foot{margin-top:20px;padding-top:14px;border-top:1px solid var(--line2)}
+.svc-cat{font-size:.62rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--ink4);font-family:var(--font-k)}
+.site-visuals{display:grid;grid-template-columns:1.2fr .8fr 1fr;gap:14px;margin:-22px 0 36px}
+.site-visual{height:178px;position:relative;overflow:hidden;border-radius:10px;border:1px solid rgba(214,163,58,.22);box-shadow:var(--sh-xs);background:var(--paper-alt)}
+.site-visual img{width:100%;height:100%;object-fit:cover;filter:saturate(.92) contrast(1.04)}
+.site-visual::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(7,20,35,0),rgba(7,20,35,.28));pointer-events:none}
+.site-visual:nth-child(2),.site-visual:nth-child(3){margin-top:0}
+
+/* ══ projects (register / ledger table) ══ */
+.register{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;border:0;border-radius:0;overflow:visible;background:transparent;box-shadow:none}
+.reg-head{display:none}
+.reg-row{min-height:330px;display:flex;flex-direction:column;padding:16px;background:linear-gradient(180deg,#fff,var(--paper));border:1px solid rgba(214,163,58,.22);border-radius:14px;box-shadow:var(--sh-xs);overflow:hidden;transition:transform var(--dur) var(--ease),box-shadow var(--dur) var(--ease),border-color var(--dur) var(--ease)}
+.reg-row:hover{transform:translateY(-4px);box-shadow:var(--sh-sm);border-color:rgba(214,163,58,.5)}
+.proj-media{height:142px;margin:-16px -16px 18px;position:relative;overflow:hidden;background:var(--paper-alt)}
+.proj-media::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(7,20,35,0),rgba(7,20,35,.2));pointer-events:none}
+.proj-media img{width:100%;height:100%;object-fit:cover;transition:transform .5s var(--ease)}
+.reg-row:hover .proj-media img{transform:scale(1.04)}
+.reg-top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:18px}
+.reg-idx{font-family:var(--font-d);font-size:1.05rem;font-weight:700;color:var(--gold-700);background:var(--gold-100);border:1px solid rgba(214,163,58,.34);border-radius:var(--r-full);padding:4px 12px;line-height:1}
+.agency-logo{height:42px;max-width:118px;object-fit:contain}
+.owner{height:54px;margin-top:auto;display:flex;align-items:center;justify-content:flex-start;border-top:1px solid var(--line2);padding-top:14px;overflow:visible}
+.owner .agency-logo{height:38px;max-width:128px;flex-shrink:0}
+.owner .agency-logo.logo-tourism{height:38px;max-width:128px;transform:scale(1.65);transform-origin:center}
+.owner-name{display:none}
+.proj-name{font-size:.98rem;font-weight:800;color:var(--ink2);line-height:1.75;margin-bottom:18px}
+.proj-rgn{align-self:flex-start;font-size:.78rem;font-weight:800;color:var(--ink3);background:rgba(7,20,35,.06);border:1px solid rgba(7,20,35,.08);border-radius:var(--r-full);padding:5px 12px;margin-bottom:12px}
+
+/* ══ credentials (certificate cards) ══ */
+.cred-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+.cred{background:#fff;border:1px solid rgba(214,163,58,.2);border-radius:12px;padding:28px 22px;box-shadow:var(--sh-xs)}
+.cred-ico{width:42px;height:42px;display:flex;align-items:center;justify-content:center;color:var(--gold-700);margin-bottom:16px}
+.cred-ico svg{width:26px;height:26px}
+.cred-lbl{font-family:var(--font-d);font-size:.92rem;font-weight:700;color:var(--ink);display:block;margin-bottom:8px}
+.cred-val{font-size:.8rem;font-weight:500;color:var(--ink3);line-height:1.9}
+
+/* ══ about (plaque) ══ */
+.about-grid{display:grid;grid-template-columns:.46fr .54fr;gap:64px;align-items:center}
+.plaque{border:1px solid rgba(127,169,200,.28);border-radius:var(--r-lg);padding:44px 32px;text-align:center;position:relative}
+.seal-year{width:130px;height:130px;margin:0 auto 18px;box-shadow:0 0 0 5px var(--ink),0 0 0 6px var(--gold-500);flex-direction:column}
+.ay-num{font-family:var(--font-d);font-size:2.5rem;font-weight:700;color:var(--gold-300);line-height:1}
+.ay-lbl{font-size:.62rem;font-weight:700;color:var(--on-ink);margin-top:4px}
+.plaque-title{font-size:.76rem;font-weight:700;color:var(--gold-400);font-family:var(--font-k);margin-bottom:14px}
+.iso-row{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
+.iso-tag{padding:5px 13px;font-size:.66rem;font-weight:700;color:var(--gold-300);border:1px solid rgba(127,169,200,.35);border-radius:var(--r);font-family:var(--font-k)}
+.dossier{display:grid;grid-template-columns:1fr 1fr;gap:0;margin-top:30px;border-top:1px solid rgba(255,255,255,.1)}
+.dossier-row{padding:16px 0;border-bottom:1px solid rgba(255,255,255,.1)}
+.dossier-row:nth-child(odd){padding-inline-end:18px;border-inline-end:1px solid rgba(255,255,255,.1)}
+.dossier-row:nth-child(even){padding-inline-start:18px}
+.dr-k{font-size:.64rem;font-weight:700;color:var(--gold-400);font-family:var(--font-k);display:block;margin-bottom:5px}
+.dr-v{font-size:.84rem;font-weight:600;color:var(--cream);line-height:1.6}
+.about-text p{font-size:.95rem;line-height:2.05;color:var(--on-ink);margin-bottom:16px}
+
+/* ══ footer ══ */
+footer{background:linear-gradient(135deg,var(--ink),var(--navy-2));padding:0 clamp(20px,5vw,80px) 30px;position:relative}
+.foot-inner{position:relative;max-width:1240px;margin:auto;padding-top:54px;display:grid;grid-template-columns:1.6fr .8fr .9fr;gap:52px}
+.foot-brand-row{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.footer-logo{width:58px;height:58px;display:flex;align-items:center;justify-content:center;padding:0}
+.footer-logo img{width:100%;height:100%;object-fit:contain}
+.seal-md{width:44px;height:44px;box-shadow:0 0 0 3px var(--ink),0 0 0 4px var(--gold-500)}
+.seal-md svg{width:21px;height:21px;color:var(--gold-300)}
+.foot-name{font-family:var(--font-d);font-size:.95rem;font-weight:700;color:var(--cream)}
+.foot-sub{font-size:.58rem;font-weight:600;color:var(--gold-400);letter-spacing:.14em;text-transform:uppercase;margin-top:3px;display:block;font-family:var(--font-k)}
+.foot-desc{font-size:.84rem;color:var(--on-ink-dim);line-height:2;max-width:340px}
+footer h4{font-family:var(--font-k);font-size:.82rem;font-weight:700;color:var(--on-ink);margin-bottom:16px;padding-bottom:10px;border-bottom:0}
+.foot-links{display:grid;gap:9px}
+.foot-links a{font-size:.84rem;color:var(--on-ink-dim);font-weight:500;transition:color var(--dur) var(--ease)}
+.foot-links a:hover{color:var(--gold-300)}
+.fi-k{display:block;font-size:.6rem;font-weight:700;color:var(--gold-500);margin-top:14px;margin-bottom:4px;font-family:var(--font-k)}
+.fi-k:first-child{margin-top:0}
+.fi-v{font-size:.82rem;color:var(--on-ink-dim);line-height:1.9}
+.foot-bottom{position:relative;max-width:1240px;margin:38px auto 0;padding-top:22px;border-top:0;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
+.foot-copy{font-size:.76rem;color:var(--on-ink-dim)}
+.foot-isos{display:flex;gap:7px}
+.foot-iso{padding:4px 11px;font-size:.62rem;font-weight:700;color:var(--gold-400);border:1px solid rgba(127,169,200,.3);border-radius:var(--r);font-family:var(--font-k)}
+
+/* ══ AI assistant ══ */
+.ai-widget{position:fixed;inset-inline-end:24px;bottom:24px;z-index:950;font-family:var(--font-k)}
+.ai-toggle{width:60px;height:60px;border-radius:50%;border:1px solid var(--gold-500);background:linear-gradient(135deg,var(--ink),var(--navy-3));color:var(--gold-200);font-size:.82rem;font-weight:900;box-shadow:0 18px 40px rgba(7,20,35,.24);cursor:pointer}
+.ai-panel{position:absolute;inset-inline-end:0;bottom:76px;width:min(380px,calc(100vw - 32px));background:rgba(255,252,245,.98);border:1px solid rgba(214,163,58,.36);border-radius:16px;box-shadow:0 22px 60px rgba(7,20,35,.22);overflow:hidden;transform:translateY(12px);opacity:0;pointer-events:none;transition:opacity var(--dur) var(--ease),transform var(--dur) var(--ease)}
+.ai-widget.open .ai-panel{opacity:1;transform:none;pointer-events:auto}
+.ai-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:16px 18px;background:linear-gradient(135deg,var(--ink),var(--navy-3));color:var(--cream)}
+.ai-title{font-size:.9rem;font-weight:900}
+.ai-sub{display:block;margin-top:3px;font-size:.66rem;font-weight:600;color:var(--on-ink)}
+.ai-close{border:0;background:rgba(255,255,255,.1);color:var(--cream);width:30px;height:30px;border-radius:50%;font-size:1.1rem;cursor:pointer}
+.ai-messages{height:300px;overflow:auto;padding:16px;display:grid;gap:10px;background:linear-gradient(180deg,#fff,var(--gold-50))}
+.ai-msg{max-width:86%;padding:10px 12px;border-radius:12px;font-size:.82rem;line-height:1.8}
+.ai-msg.bot{justify-self:start;background:#fff;border:1px solid var(--line);color:var(--ink3)}
+.ai-msg.user{justify-self:end;background:var(--ink);color:var(--gold-100)}
+.ai-prompts{display:flex;flex-wrap:wrap;gap:7px;padding:0 16px 14px;background:var(--gold-50)}
+.ai-prompts button{border:1px solid rgba(214,163,58,.34);background:#fff;color:var(--ink3);border-radius:var(--r-full);padding:7px 10px;font-family:var(--font-k);font-size:.7rem;font-weight:800;cursor:pointer}
+.ai-form{display:flex;gap:8px;padding:12px;border-top:1px solid var(--line);background:#fff}
+.ai-input{flex:1;border:1px solid var(--line);border-radius:var(--r-full);padding:10px 13px;font-family:var(--font-k);font-size:.82rem;color:var(--ink);outline:none}
+.ai-send{border:0;border-radius:var(--r-full);padding:0 16px;background:var(--gold-600);color:var(--ink);font-family:var(--font-k);font-weight:900;cursor:pointer}
+.ai-note{padding:0 16px 14px;background:#fff;color:var(--ink4);font-size:.64rem;line-height:1.6}
+
+/* ══ reveal ══ */
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+.hero-inner>*{animation:fadeUp .8s var(--ease) both}
+.hero-inner>:nth-child(1){animation-delay:.05s}
+.hero-inner>:nth-child(2){animation-delay:.12s}
+.hero-inner>:nth-child(3){animation-delay:.19s}
+.hero-inner>:nth-child(4){animation-delay:.26s}
+.hero-inner>:nth-child(5){animation-delay:.33s}
+.hero-inner>:nth-child(6){animation-delay:.4s}
+.hero-inner>:nth-child(7){animation-delay:.47s}
+.rev{opacity:0;transform:translateY(14px);transition:opacity .6s var(--ease),transform .6s var(--ease)}
+.rev.in{opacity:1;transform:none}
+.rev.d1{transition-delay:.06s}.rev.d2{transition-delay:.12s}.rev.d3{transition-delay:.18s}.rev.d4{transition-delay:.24s}
+
+/* ══ responsive ══ */
+@media(max-width:1100px){
+  .sec-head{grid-template-columns:1fr;gap:16px}
+  .site-visuals{grid-template-columns:1fr 1fr}
+  .site-visual:nth-child(3){grid-column:1/-1}
+  .svc-grid{grid-template-columns:1fr 1fr}
+  .register{grid-template-columns:1fr 1fr}
+  .cred-grid{grid-template-columns:1fr 1fr}
+  .about-grid{grid-template-columns:1fr;gap:40px}
+  .foot-inner{grid-template-columns:1fr 1fr;gap:36px}
+}
+@media(max-width:720px){
+  .nav{height:auto;min-height:72px;padding-block:10px}
+  .nav-actions{margin-inline-start:auto}
+  .brand-logo{width:112px;height:56px}
+  .brand-logo img{width:112px;height:112px;max-width:none;transform:none}
+  .nav-links{display:none}
+  .lang-toggle button{padding:7px 10px}
+  .hero{padding-top:104px}
+  .hero-bg img{opacity:.32}
+  .svc-grid,.cred-grid{grid-template-columns:1fr}
+  .site-visuals{grid-template-columns:1fr;gap:10px;margin:-18px 0 28px}
+  .site-visual,.site-visual:nth-child(2),.site-visual:nth-child(3){height:150px;margin-top:0;grid-column:auto}
+  .partners-grid{grid-template-columns:1fr}
+  .partner-card{min-height:82px}
+  .register{grid-template-columns:1fr}
+  .reg-head{display:none}
+  .reg-row{gap:6px;padding:18px 20px;min-height:0}
+  .proj-media{height:180px;margin:-18px -20px 16px}
+  .agency-logo{height:36px;max-width:104px}
+  .reg-idx{font-size:.8rem;color:var(--gold-500)}
+  .ledger{flex-wrap:wrap}
+  .ledger-item{flex:0 0 50%;margin-bottom:14px}
+  .ledger-item:nth-child(2n)::after{display:none}
+  .dossier{grid-template-columns:1fr}
+  .dossier-row:nth-child(odd){border-inline-end:none;padding-inline-end:0}
+  .dossier-row:nth-child(even){padding-inline-start:0}
+  .foot-inner{grid-template-columns:1fr}
+  .foot-bottom{flex-direction:column;align-items:flex-start}
+  .ai-widget{inset-inline:16px;bottom:16px}
+  .ai-toggle{margin-inline-start:auto;display:block}
+  .ai-panel{width:100%;bottom:72px}
+  .ai-messages{height:280px}
+}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+<div class="page-frame" aria-hidden="true"></div>
+<div id="prog"></div>
+
+<!-- ══ NAV ══ -->
+<nav class="nav" id="nav">
+  <a class="brand" href="#top">
+    <div class="brand-logo">
+      <img src="images/logo-Tameer.svg" alt="شعار تعمير البيداء">
+    </div>
+  </a>
+  <div class="nav-actions">
+    <div class="nav-links">
+      <a href="#services">الخدمات</a>
+      <a href="#projects">المشاريع</a>
+      <a href="#credentials">الاعتمادات</a>
+      <a href="#about">عن الشركة</a>
+      <a href="#contact" class="nav-cta">تواصل معنا</a>
+    </div>
+    <div class="lang-toggle" aria-label="تبديل اللغة">
+      <button type="button" data-lang="ar" class="active">العربية</button>
+      <button type="button" data-lang="en">الإنجليزية</button>
+    </div>
+  </div>
+</nav>
+
+<!-- ══ HERO ══ -->
+<header id="top">
+  <div class="frieze frieze-top" aria-hidden="true"></div>
+  <section class="hero">
+    <div class="hero-bg" aria-hidden="true"><img src="images/Hallway.png" alt=""></div>
+    <div class="hero-inner">
+      <div class="hero-tag"><i>◇</i>منذ ٢٠٠٨ — شقراء، منطقة الرياض<i>◇</i></div>
+      <h1>تعمير البيداء<span>للتجارة والمقاولات</span></h1>
+      <p class="hero-p">شركة سعودية متخصصة في المقاولات والتشييد والتشغيل والصيانة والترميم التراثي، تقدم حلولاً تنفيذية لمشاريع حكومية على امتداد المملكة العربية السعودية.</p>
+      <div class="orn-rule"><span></span><i>◆</i><span></span></div>
+      <div class="ledger">
+        <div class="ledger-item"><span class="ledger-n">١٦+</span><span class="ledger-l">عاماً من الخبرة</span></div>
+        <div class="ledger-item"><span class="ledger-n">٢٨</span><span class="ledger-l">مشروعاً حكومياً</span></div>
+        <div class="ledger-item"><span class="ledger-n">٣</span><span class="ledger-l">شهادات آيزو دولية</span></div>
+        <div class="ledger-item"><span class="ledger-n">٨+</span><span class="ledger-l">مناطق عمل بالمملكة</span></div>
+      </div>
+      <div class="hero-btns">
+        <a class="btn-primary" href="#projects">استعراض المشاريع</a>
+        <a class="btn-ghost" href="#about">عن الشركة</a>
+      </div>
+    </div>
+  </section>
+</header>
+
+<!-- ══ PARTNERS ══ -->
+<section class="partners">
+  <div class="partners-wrap">
+    <div class="partners-title">نُنفّذ مشاريعنا ضمن شراكات مع جهات حكومية عريقة</div>
+    <div class="partners-grid">
+      <div class="partner-card"><img src="images/moc_logo_light.svg" alt="وزارة الثقافة"></div>
+      <div class="partner-card"><img class="logo-tourism" src="images/ministry-of-tourism-logo.svg" alt="وزارة السياحة"></div>
+      <div class="partner-card"><img src="images/mewa-logo.svg" alt="وزارة البيئة والمياه والزراعة"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ SERVICES ══ -->
+<section class="sec" id="services">
+  <div class="wrap">
+    <div class="sec-head rev">
+      <div>
+        <div class="sec-eyebrow">نطاق الخدمات</div>
+        <h2 class="sec-h2">حلول بناء <strong>متكاملة</strong></h2>
+      </div>
+      <p class="sec-p">مسارات عمل تغطي دورة المشروع كاملاً من التأسيس حتى التشغيل، بمعايير جودة دولية وانضباط تنفيذي محكم.</p>
+    </div>
+    <div class="site-visuals" aria-hidden="true">
+      <div class="site-visual"><img src="images/feed.png" alt=""></div>
+      <div class="site-visual"><img src="images/Village.png" alt=""></div>
+      <div class="site-visual"><img src="images/hail.png" alt=""></div>
+    </div>
+    <div class="svc-grid">
+      <div class="svc rev d1">
+        <div class="svc-ico"><svg viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12 14 5 24 12"/><path d="M5 12V23H23V12"/><path d="M10 14V21M18 14V21"/><path d="M2 23H26"/></svg></div>
+        <h3>تشييد المباني</h3>
+        <p>تنفيذ مبانٍ سكنية وتجارية وإدارية بمعايير جودة وسلامة معتمدة، وإدارة مشاريع دقيقة وفق جدول زمني محكم.</p>
+        <div class="svc-foot"><span class="svc-cat">الأعمال المدنية</span></div>
+      </div>
+      <div class="svc rev d2">
+        <div class="svc-ico"><svg viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 20Q14 6 25 20"/><path d="M3 20H25"/><path d="M8 20V25M20 20V25"/></svg></div>
+        <h3>الهندسة المدنية</h3>
+        <p>أعمال البنية التحتية والطرق والمرافق ومشاريع التطوير الحضري بكفاءة هندسية عالية.</p>
+        <div class="svc-foot"><span class="svc-cat">الهندسة</span></div>
+      </div>
+      <div class="svc rev d3">
+        <div class="svc-ico"><svg viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 9 8 5 11 9 14 5 17 9 20 5 23 9"/><path d="M6 9H22V24H6Z"/><path d="M11 24V18Q11 15 14 15Q17 15 17 18V24"/></svg></div>
+        <h3>ترميم وتأهيل المواقع</h3>
+        <p>ترميم المباني والمواقع التراثية وتجديد المنشآت وفق متطلبات الجهات الثقافية والتراثية.</p>
+        <div class="svc-foot"><span class="svc-cat">الترميم</span></div>
+      </div>
+      <div class="svc rev d1">
+        <div class="svc-ico"><svg viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="14" cy="14" r="6"/><circle cx="14" cy="14" r="1.6"/><path d="M14 4V7M14 21V24M24 14H21M7 14H4M21 7 19 9M9 19 7 21M21 21 19 19M9 9 7 7"/></svg></div>
+        <h3>التشغيل والصيانة</h3>
+        <p>برامج صيانة دورية ووقائية شاملة للمنشآت والمرافق لضمان الاستدامة وطول العمر التشغيلي.</p>
+        <div class="svc-foot"><span class="svc-cat">التشغيل</span></div>
+      </div>
+      <div class="svc rev d2">
+        <div class="svc-ico"><svg viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="14" cy="5" r="1.6"/><path d="M14 6.5 8 23M14 6.5 20 23"/><path d="M6 23H10M18 23H22"/></svg></div>
+        <h3>التشطيبات المتخصصة</h3>
+        <p>أعمال كهربائية وميكانيكية وتشطيبات داخلية وخارجية بجودة فائقة وفق المواصفات الفنية.</p>
+        <div class="svc-foot"><span class="svc-cat">التشطيبات والأنظمة</span></div>
+      </div>
+      <div class="svc rev d3">
+        <div class="svc-ico"><svg viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="5" width="16" height="18" rx="1"/><path d="M9 10H19M9 14H19M9 18H15"/><path d="M12 23 14 26 16 23"/></svg></div>
+        <h3>المقاولات العامة</h3>
+        <p>إدارة وتنفيذ المشاريع الكبرى وفق جداول زمنية وميزانيات محكمة مع تنسيق متعدد الأطراف.</p>
+        <div class="svc-foot"><span class="svc-cat">المقاولات العامة</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ PROJECTS ══ -->
+<section class="sec sec-alt" id="projects">
+  <div class="wrap">
+    <div class="sec-head rev">
+      <div>
+        <div class="sec-eyebrow">سجل الأعمال</div>
+        <h2 class="sec-h2">مشاريع <strong>مختارة</strong></h2>
+      </div>
+      <p class="sec-p">بصمة عمل في مشاريع حكومية تراثية وسياحية وزراعية تمتد عبر مناطق المملكة العربية السعودية.</p>
+    </div>
+    <div class="register rev">
+      <div class="reg-head"><span>الرقم</span><span>الجهة المالكة</span><span>اسم المشروع</span><span>المنطقة</span></div>
+      <div class="reg-row" data-agency="culture"><div class="proj-media"><img class="proj-img" src="images/Village.png" alt="تهيئة وتأهيل المواقع التراثية بشقراء واشيقر"></div><div class="reg-top"><span class="reg-idx">٠١</span><span class="proj-rgn">الرياض</span></div><span class="proj-name">تهيئة وتأهيل المواقع التراثية بشقراء واشيقر</span><div class="owner"><img class="agency-logo" src="images/moc_logo_light.svg" alt="وزارة الثقافة"><span class="owner-name">وزارة الثقافة</span></div></div>
+      <div class="reg-row" data-agency="tourism"><div class="proj-media"><img class="proj-img" src="images/feed.png" alt="مركز عبد اللطيف جميل للآثار والتراث الوطني بمدينة فيد"></div><div class="reg-top"><span class="reg-idx">٠٢</span><span class="proj-rgn">حائل</span></div><span class="proj-name">مركز عبد اللطيف جميل للآثار والتراث الوطني بمدينة فيد</span><div class="owner"><img class="agency-logo logo-tourism" src="images/ministry-of-tourism-logo.svg" alt="وزارة السياحة"><span class="owner-name">وزارة السياحة</span></div></div>
+      <div class="reg-row" data-agency="culture"><div class="proj-media"><img class="proj-img" src="images/sisra.png" alt="تأهيل موقع سيسرا وغار حضرة في منطقة الجوف"></div><div class="reg-top"><span class="reg-idx">٠٣</span><span class="proj-rgn">الجوف</span></div><span class="proj-name">تأهيل موقع سيسرا وغار حضرة في منطقة الجوف</span><div class="owner"><img class="agency-logo" src="images/moc_logo_light.svg" alt="وزارة الثقافة"><span class="owner-name">وزارة الثقافة</span></div></div>
+      <div class="reg-row" data-agency="culture"><div class="proj-media"><img class="proj-img" src="images/hail.png" alt="مشروع تأهيل موقع جبل يا طب منطقة حائل"></div><div class="reg-top"><span class="reg-idx">٠٤</span><span class="proj-rgn">حائل</span></div><span class="proj-name">مشروع تأهيل موقع جبل يا طب منطقة حائل</span><div class="owner"><img class="agency-logo" src="images/moc_logo_light.svg" alt="وزارة الثقافة"><span class="owner-name">وزارة الثقافة</span></div></div>
+      <div class="reg-row" data-agency="tourism"><div class="proj-media"><img class="proj-img" src="images/Mosque.png" alt="مشروع سمو الأمير محمد بن سلمان لتطوير المساجد التاريخية بمنطقة حائل"></div><div class="reg-top"><span class="reg-idx">٠٥</span><span class="proj-rgn">حائل</span></div><span class="proj-name">مشروع سمو الأمير محمد بن سلمان لتطوير المساجد التاريخية بمنطقة حائل</span><div class="owner"><img class="agency-logo logo-tourism" src="images/ministry-of-tourism-logo.svg" alt="وزارة السياحة"><span class="owner-name">وزارة السياحة</span></div></div>
+      <div class="reg-row" data-agency="tourism"><div class="proj-media"><img class="proj-img" src="images/Jabal Al-Qana.png" alt="تهيئة شاطئ جبل القنع بمحافظة القنفذة"></div><div class="reg-top"><span class="reg-idx">٠٦</span><span class="proj-rgn">القنفذة</span></div><span class="proj-name">تهيئة شاطئ جبل القنع بمحافظة القنفذة</span><div class="owner"><img class="agency-logo logo-tourism" src="images/ministry-of-tourism-logo.svg" alt="وزارة السياحة"><span class="owner-name">وزارة السياحة</span></div></div>
+      <div class="reg-row" data-agency="tourism"><div class="proj-media"><img class="proj-img" src="images/ibrahim-palace.png" alt="تنفيذ الأعمال الإنقاذية العاجلة بقصر إبراهيم بمحافظة الأحساء"></div><div class="reg-top"><span class="reg-idx">٠٧</span><span class="proj-rgn">الشرقية</span></div><span class="proj-name">تنفيذ الأعمال الإنقاذية العاجلة بقصر إبراهيم بمحافظة الأحساء</span><div class="owner"><img class="agency-logo logo-tourism" src="images/ministry-of-tourism-logo.svg" alt="وزارة السياحة"><span class="owner-name">وزارة السياحة</span></div></div>
+      <div class="reg-row" data-agency="culture"><div class="proj-media"><img class="proj-img" src="images/haql.png" alt="ترميم وتأهيل قلعة حقل بمنطقة تبوك"></div><div class="reg-top"><span class="reg-idx">٠٨</span><span class="proj-rgn">تبوك</span></div><span class="proj-name">ترميم وتأهيل قلعة حقل بمنطقة تبوك</span><div class="owner"><img class="agency-logo" src="images/moc_logo_light.svg" alt="وزارة الثقافة"><span class="owner-name">وزارة الثقافة</span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ CREDENTIALS ══ -->
+<section class="sec" id="credentials">
+  <div class="wrap">
+    <div class="sec-head rev">
+      <div>
+        <div class="sec-eyebrow">الاعتمادات والتصنيفات</div>
+        <h2 class="sec-h2">جاهزية <strong>رسمية</strong></h2>
+      </div>
+      <p class="sec-p">اعتمادات وتصنيفات معتمدة تدعم تنفيذ المشاريع وفق متطلبات الجهات المالكة والمعايير الدولية.</p>
+    </div>
+    <div class="cred-grid">
+      <div class="cred bracketed rev d1">
+        <div class="cred-ico"><svg viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 4H18L21 7V24H7Z"/><path d="M18 4V7H21"/><path d="M10 12H18M10 16H18M10 20H15"/></svg></div>
+        <span class="cred-lbl">السجل التجاري</span>
+        <div class="cred-val">1113001181<br>7001666168</div>
+      </div>
+      <div class="cred bracketed rev d2">
+        <div class="cred-ico"><svg viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="14" cy="14" r="8"/><circle cx="14" cy="14" r="5"/><path d="M14 2V4M14 24V26M2 14H4M24 14H26"/></svg></div>
+        <span class="cred-lbl">ضريبة القيمة المضافة</span>
+        <div class="cred-val">300992773700003</div>
+      </div>
+      <div class="cred bracketed rev d3">
+        <div class="cred-ico"><svg viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="14" cy="11" r="6"/><path d="M14 8 15.4 10.8 18.5 11.2 16.2 13.3 16.8 16.4 14 14.8 11.2 16.4 11.8 13.3 9.5 11.2 12.6 10.8Z"/><path d="M10 16 7 25 11.5 22.5Z"/><path d="M18 16 21 25 16.5 22.5Z"/></svg></div>
+        <span class="cred-lbl">شهادات ISO</span>
+        <div class="cred-val">ISO 9001 — إدارة الجودة<br>ISO 14001 — الإدارة البيئية<br>ISO 45001 — السلامة المهنية</div>
+      </div>
+      <div class="cred bracketed rev d4">
+        <div class="cred-ico"><svg viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3 22 6V14C22 19 18.5 23 14 25C9.5 23 6 19 6 14V6Z"/><path d="M14 9 15.6 12.2 19 12.6 16.5 15 17.2 18.4 14 16.7 10.8 18.4 11.5 15 9 12.6 12.4 12.2Z"/></svg></div>
+        <span class="cred-lbl">تصنيف خدمات المدن</span>
+        <div class="cred-val">درجة ثانية — تقييم ٨٨٫٥٥</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="div-orn"><span></span><i>◆</i><span></span></div>
+
+<!-- ══ ABOUT ══ -->
+<section class="sec sec-ink" id="about">
+  <div class="wrap">
+    <div class="about-grid">
+      <div class="plaque bracketed rev">
+        <div class="seal seal-year">
+          <span class="ay-num">٢٠٠٨</span>
+          <span class="ay-lbl">سنة التأسيس</span>
+        </div>
+        <div class="plaque-title">اعتمادات جودة دولية سارية</div>
+        <div class="iso-row">
+          <span class="iso-tag">ISO 9001</span>
+          <span class="iso-tag">ISO 14001</span>
+          <span class="iso-tag">ISO 45001</span>
+        </div>
+      </div>
+      <div class="about-text rev">
+        <div class="sec-eyebrow">عن الشركة</div>
+        <h2 class="sec-h2">رائدة في <strong>المقاولات</strong> السعودية</h2>
+        <p>تعمير البيداء للتجارة والمقاولات شركة سعودية مقرها شقراء بمنطقة الرياض، تأسست عام ٢٠٠٨ وتعمل في مجالات التشييد والهندسة المدنية والتشغيل والصيانة والترميم التراثي والمقاولات العامة.</p>
+        <div class="dossier">
+          <div class="dossier-row"><span class="dr-k">السجل التجاري</span><span class="dr-v">1113001181 | 7001666168</span></div>
+          <div class="dossier-row"><span class="dr-k">الرقم الضريبي</span><span class="dr-v">300992773700003</span></div>
+          <div class="dossier-row"><span class="dr-k">سنة التأسيس</span><span class="dr-v">٢٠٠٨م — منذ ١٦+ عاماً</span></div>
+          <div class="dossier-row"><span class="dr-k">المقر الرئيسي</span><span class="dr-v">شقراء، منطقة الرياض</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ FOOTER ══ -->
+<footer id="contact">
+  <div class="frieze frieze-foot" aria-hidden="true"></div>
+  <div class="foot-inner">
+    <div>
+      <div class="foot-brand-row">
+        <div>
+          <div class="foot-name">تعمير البيداء للتجارة والمقاولات</div>
+          <span class="foot-sub">تأسست ٢٠٠٨ — السعودية</span>
+        </div>
+      </div>
+      <p class="foot-desc">شركة سعودية متخصصة في المقاولات والتشييد والتشغيل والصيانة والترميم التراثي على امتداد المملكة.</p>
+    </div>
+    <div>
+      <h4>روابط سريعة</h4>
+      <div class="foot-links">
+        <a href="#services">الخدمات</a>
+        <a href="#projects">المشاريع</a>
+        <a href="#credentials">الاعتمادات</a>
+        <a href="#about">عن الشركة</a>
+      </div>
+    </div>
+    <div>
+      <h4>بيانات الشركة</h4>
+      <span class="fi-k">السجل التجاري</span><p class="fi-v">1113001181 | 7001666168</p>
+      <span class="fi-k">الرقم الضريبي</span><p class="fi-v">300992773700003</p>
+      <span class="fi-k">الموقع</span><p class="fi-v">شقراء، منطقة الرياض — المملكة العربية السعودية</p>
+    </div>
+  </div>
+  <div class="foot-bottom">
+    <p class="foot-copy">© 2026 تعمير البيداء للتجارة والمقاولات — جميع الحقوق محفوظة</p>
+    <div class="foot-isos">
+      <span class="foot-iso">ISO 9001</span>
+      <span class="foot-iso">ISO 14001</span>
+      <span class="foot-iso">ISO 45001</span>
+    </div>
+  </div>
+</footer>
+
+<div class="ai-widget" id="aiWidget">
+  <div class="ai-panel" role="dialog" aria-label="مساعد تعمير الذكي">
+    <div class="ai-head">
+      <div>
+        <span class="ai-title">مساعد تعمير الذكي</span>
+        <span class="ai-sub">اسأل عن الخدمات والمشاريع والاعتمادات</span>
+      </div>
+      <button class="ai-close" type="button" aria-label="إغلاق">×</button>
+    </div>
+    <div class="ai-messages" id="aiMessages">
+      <div class="ai-msg bot">مرحباً، أستطيع مساعدتك في معرفة خدمات الشركة ومشاريعها واعتماداتها.</div>
+    </div>
+    <div class="ai-prompts">
+      <button type="button" data-prompt="ما خدمات الشركة؟">الخدمات</button>
+      <button type="button" data-prompt="اعرض المشاريع">المشاريع</button>
+      <button type="button" data-prompt="ما الاعتمادات؟">الاعتمادات</button>
+    </div>
+    <form class="ai-form" id="aiForm">
+      <input class="ai-input" id="aiInput" type="text" autocomplete="off" placeholder="اكتب سؤالك هنا">
+      <button class="ai-send" type="submit">إرسال</button>
+    </form>
+    <div class="ai-note">واجهة جاهزة للربط لاحقاً بخادم AI آمن. لا تضع مفتاح API داخل ملف HTML.</div>
+  </div>
+  <button class="ai-toggle" type="button" aria-label="فتح مساعد AI">AI</button>
+</div>
+
+<script>
+const content = {
+  ar: {
+    title:'تعمير البيداء للتجارة والمقاولات',
+    brandName:'تعمير البيداء',
+    brandSub:'للتجارة والمقاولات',
+    nav:['الخدمات','المشاريع','الاعتمادات','عن الشركة','تواصل معنا'],
+    heroTag:'منذ ٢٠٠٨ — شقراء، منطقة الرياض',
+    h1:'تعمير البيداء<span>للتجارة والمقاولات</span>',
+    heroP:'شركة سعودية متخصصة في المقاولات والتشييد والتشغيل والصيانة والترميم التراثي، تقدم حلولاً تنفيذية لمشاريع حكومية على امتداد المملكة العربية السعودية.',
+    stats:[['١٦+','عاماً من الخبرة'],['٢٨','مشروعاً حكومياً'],['٣','شهادات آيزو دولية'],['٨+','مناطق عمل بالمملكة']],
+    buttons:['استعراض المشاريع','عن الشركة'],
+    partners:'نُنفّذ مشاريعنا ضمن شراكات مع جهات حكومية عريقة',
+    servicesHead:['نطاق الخدمات','حلول بناء <strong>متكاملة</strong>','مسارات عمل تغطي دورة المشروع كاملاً من التأسيس حتى التشغيل، بمعايير جودة دولية وانضباط تنفيذي محكم.'],
+    services:[
+      ['تشييد المباني','تنفيذ مبانٍ سكنية وتجارية وإدارية بمعايير جودة وسلامة معتمدة، وإدارة مشاريع دقيقة وفق جدول زمني محكم.','الأعمال المدنية'],
+      ['الهندسة المدنية','أعمال البنية التحتية والطرق والمرافق ومشاريع التطوير الحضري بكفاءة هندسية عالية.','الهندسة'],
+      ['ترميم وتأهيل المواقع','ترميم المباني والمواقع التراثية وتجديد المنشآت وفق متطلبات الجهات الثقافية والتراثية.','الترميم'],
+      ['التشغيل والصيانة','برامج صيانة دورية ووقائية شاملة للمنشآت والمرافق لضمان الاستدامة وطول العمر التشغيلي.','التشغيل'],
+      ['التشطيبات المتخصصة','أعمال كهربائية وميكانيكية وتشطيبات داخلية وخارجية بجودة فائقة وفق المواصفات الفنية.','التشطيبات والأنظمة'],
+      ['المقاولات العامة','إدارة وتنفيذ المشاريع الكبرى وفق جداول زمنية وميزانيات محكمة مع تنسيق متعدد الأطراف.','المقاولات العامة']
+    ],
+    projectsHead:['سجل الأعمال','مشاريع <strong>مختارة</strong>','بصمة عمل في مشاريع حكومية تراثية وسياحية وزراعية تمتد عبر مناطق المملكة العربية السعودية.'],
+    tableHead:['الرقم','الجهة المالكة','اسم المشروع','المنطقة'],
+    projects:[
+      ['٠١','وزارة الثقافة','تهيئة وتأهيل المواقع التراثية بشقراء واشيقر','الرياض'],
+      ['٠٢','وزارة السياحة','مركز عبد اللطيف جميل للآثار والتراث الوطني بمدينة فيد','حائل'],
+      ['٠٣','وزارة الثقافة','تأهيل موقع سيسرا وغار حضرة في منطقة الجوف','الجوف'],
+      ['٠٤','وزارة الثقافة','مشروع تأهيل موقع جبل يا طب منطقة حائل','حائل'],
+      ['٠٥','وزارة السياحة','مشروع سمو الأمير محمد بن سلمان لتطوير المساجد التاريخية بمنطقة حائل','حائل'],
+      ['٠٦','وزارة السياحة','تهيئة شاطئ جبل القنع بمحافظة القنفذة','القنفذة'],
+      ['٠٧','وزارة السياحة','تنفيذ الأعمال الإنقاذية العاجلة بقصر إبراهيم بمحافظة الأحساء','الشرقية'],
+      ['٠٨','وزارة الثقافة','ترميم وتأهيل قلعة حقل بمنطقة تبوك','تبوك']
+    ],
+    credHead:['الاعتمادات والتصنيفات','جاهزية <strong>رسمية</strong>','اعتمادات وتصنيفات معتمدة تدعم تنفيذ المشاريع وفق متطلبات الجهات المالكة والمعايير الدولية.'],
+    creds:[
+      ['السجل التجاري','1113001181<br>7001666168'],
+      ['ضريبة القيمة المضافة','300992773700003'],
+      ['شهادات ISO','ISO 9001 — إدارة الجودة<br>ISO 14001 — الإدارة البيئية<br>ISO 45001 — السلامة المهنية'],
+      ['تصنيف خدمات المدن','درجة ثانية — تقييم ٨٨٫٥٥']
+    ],
+    iso:['ISO 9001','ISO 14001','ISO 45001'],
+    about:['سنة التأسيس','اعتمادات جودة دولية سارية','عن الشركة','رائدة في <strong>المقاولات</strong> السعودية','تعمير البيداء للتجارة والمقاولات شركة سعودية مقرها شقراء بمنطقة الرياض، تأسست عام ٢٠٠٨ وتعمل في مجالات التشييد والهندسة المدنية والتشغيل والصيانة والترميم التراثي والمقاولات العامة.'],
+    dossier:[['السجل التجاري','1113001181 | 7001666168'],['الرقم الضريبي','300992773700003'],['سنة التأسيس','٢٠٠٨م — منذ ١٦+ عاماً'],['المقر الرئيسي','شقراء، منطقة الرياض']],
+    footer:['تعمير البيداء للتجارة والمقاولات','تأسست ٢٠٠٨ — السعودية','شركة سعودية متخصصة في المقاولات والتشييد والتشغيل والصيانة والترميم التراثي على امتداد المملكة.','روابط سريعة','بيانات الشركة','السجل التجاري','الرقم الضريبي','الموقع','شقراء، منطقة الرياض — المملكة العربية السعودية','© 2026 تعمير البيداء للتجارة والمقاولات — جميع الحقوق محفوظة']
+  },
+  en: {
+    title:'Tameer Al-Baydaa Trading & Contracting',
+    brandName:'Tameer Al-Baydaa',
+    brandSub:'Trading & Contracting',
+    nav:['Services','Projects','Credentials','About','Contact Us'],
+    heroTag:'Since 2008 — Shaqra, Riyadh Region',
+    h1:'Tameer Al-Baydaa<span>Trading & Contracting</span>',
+    heroP:'A Saudi contracting company specializing in construction, civil works, operations, maintenance, and heritage restoration for government projects across the Kingdom of Saudi Arabia.',
+    stats:[['16+','Years of experience'],['28','Government projects'],['3','International ISO certificates'],['8+','Regions served in KSA']],
+    buttons:['View Projects','About the Company'],
+    partners:'We deliver projects in partnership with leading government entities',
+    servicesHead:['Scope of Services','Integrated <strong>Construction Solutions</strong>','Workstreams covering the full project lifecycle, from foundation to operation, with international quality standards and disciplined delivery.'],
+    services:[
+      ['Building Construction','Residential, commercial, and administrative buildings delivered with certified quality and safety standards and precise project management.','Civil Works'],
+      ['Civil Engineering','Infrastructure, roads, utilities, and urban development projects delivered with high engineering efficiency.','Engineering'],
+      ['Site Restoration','Restoration of heritage buildings and sites in line with cultural and heritage authority requirements.','Restoration'],
+      ['Operations & Maintenance','Preventive and scheduled maintenance programs that support durability, reliability, and operational continuity.','Operations'],
+      ['Specialized Finishing','Electrical, mechanical, interior, and exterior finishing works delivered to precise technical specifications.','MEP & Finishing'],
+      ['General Contracting','Management and delivery of major projects with controlled schedules, budgets, and multi-party coordination.','General Contracting']
+    ],
+    projectsHead:['Project Register','Selected <strong>Projects</strong>','A track record of government heritage, tourism, and agriculture projects across Saudi Arabia.'],
+    tableHead:['No.','Client','Project Name','Region'],
+    projects:[
+      ['01','Ministry of Culture','Preparation and rehabilitation of heritage sites in Shaqra and Ushaiqer','Riyadh'],
+      ['02','Ministry of Tourism','Abdul Latif Jameel Center for Archaeology and National Heritage in Fayd','Hail'],
+      ['03','Ministry of Culture','Rehabilitation of Sisra site and Hadrah cave in Al-Jouf','Al-Jouf'],
+      ['04','Ministry of Culture','Rehabilitation of Jabal Ya Tab site in Hail Region','Hail'],
+      ['05','Ministry of Tourism','HRH Prince Mohammed bin Salman Project for the Development of Historic Mosques in Hail Region','Hail'],
+      ['06','Ministry of Tourism','Preparation of Jabal Al-Qana Beach in Al-Qunfudhah Governorate','Al-Qunfudhah'],
+      ['07','Ministry of Tourism','Urgent rescue works at Ibrahim Palace in Al-Ahsa Governorate','Eastern Province'],
+      ['08','Ministry of Culture','Restoration and rehabilitation of Haql Castle in Tabuk Region','Tabuk']
+    ],
+    credHead:['Credentials & Classifications','Official <strong>Readiness</strong>','Certified credentials and classifications that support delivery according to owner requirements and international standards.'],
+    creds:[
+      ['Commercial Registration','1113001181<br>7001666168'],
+      ['Value Added Tax','300992773700003'],
+      ['ISO Certificates','ISO 9001 — Quality Management<br>ISO 14001 — Environmental Management<br>ISO 45001 — Occupational Safety'],
+      ['Municipal Services Classification','Second grade — score 88.55']
+    ],
+    iso:['ISO 9001','ISO 14001','ISO 45001'],
+    about:['Year Established','Active International Quality Certifications','About the Company','A Saudi <strong>Contracting</strong> Leader','Tameer Al-Baydaa Trading & Contracting is a Saudi company headquartered in Shaqra, Riyadh Region. Established in 2008, it works across construction, civil engineering, operations, maintenance, heritage restoration, and general contracting.'],
+    dossier:[['Commercial Registration','1113001181 | 7001666168'],['Tax Number','300992773700003'],['Year Established','2008 — 16+ years'],['Head Office','Shaqra, Riyadh Region']],
+    footer:['Tameer Al-Baydaa Trading & Contracting','Est. 2008 — KSA','A Saudi contracting company specialized in construction, operations, maintenance, and heritage restoration across the Kingdom.','Quick Links','Company Details','Commercial Registration','Tax Number','Location','Shaqra, Riyadh Region — Kingdom of Saudi Arabia','© 2026 Tameer Al-Baydaa Trading & Contracting — All rights reserved']
+  }
+};
+
+function setText(selector, value, html=false) {
+  const el = document.querySelector(selector);
+  if (!el) return;
+  if (html) el.innerHTML = value;
+  else el.textContent = value;
+}
+
+function applyLanguage(lang) {
+  const t = content[lang];
+  document.documentElement.lang = lang;
+  document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+  document.title = t.title;
+  document.querySelectorAll('.nav-links a').forEach((el, i) => el.textContent = t.nav[i]);
+  setText('.hero-tag', `◇${t.heroTag}◇`);
+  setText('h1', t.h1, true);
+  setText('.hero-p', t.heroP);
+  document.querySelectorAll('.ledger-item').forEach((el, i) => {
+    el.querySelector('.ledger-n').textContent = t.stats[i][0];
+    el.querySelector('.ledger-l').textContent = t.stats[i][1];
+  });
+  document.querySelectorAll('.hero-btns a').forEach((el, i) => el.textContent = t.buttons[i]);
+  setText('.partners-title', t.partners);
+  setText('#services .sec-eyebrow', t.servicesHead[0]);
+  setText('#services .sec-h2', t.servicesHead[1], true);
+  setText('#services .sec-p', t.servicesHead[2]);
+  document.querySelectorAll('.svc').forEach((el, i) => {
+    el.querySelector('h3').textContent = t.services[i][0];
+    el.querySelector('p').textContent = t.services[i][1];
+    el.querySelector('.svc-cat').textContent = t.services[i][2];
+  });
+  setText('#projects .sec-eyebrow', t.projectsHead[0]);
+  setText('#projects .sec-h2', t.projectsHead[1], true);
+  setText('#projects .sec-p', t.projectsHead[2]);
+  document.querySelectorAll('.reg-head span').forEach((el, i) => el.textContent = t.tableHead[i]);
+  document.querySelectorAll('.reg-row').forEach((row, i) => {
+    row.querySelector('.reg-idx').textContent = t.projects[i][0];
+    row.querySelector('.owner-name').textContent = t.projects[i][1];
+    row.querySelector('.proj-name').textContent = t.projects[i][2];
+    row.querySelector('.proj-rgn').textContent = t.projects[i][3];
+    const projectImage = row.querySelector('.proj-img');
+    if (projectImage) projectImage.alt = t.projects[i][2];
+    const logo = row.querySelector('.agency-logo');
+    if (logo) logo.alt = t.projects[i][1];
+  });
+  setText('#credentials .sec-eyebrow', t.credHead[0]);
+  setText('#credentials .sec-h2', t.credHead[1], true);
+  setText('#credentials .sec-p', t.credHead[2]);
+  document.querySelectorAll('.cred').forEach((el, i) => {
+    el.querySelector('.cred-lbl').textContent = t.creds[i][0];
+    el.querySelector('.cred-val').innerHTML = t.creds[i][1];
+  });
+  document.querySelectorAll('.iso-tag').forEach((el, i) => el.textContent = t.iso[i]);
+  setText('.ay-lbl', t.about[0]);
+  setText('.plaque-title', t.about[1]);
+  setText('#about .sec-eyebrow', t.about[2]);
+  setText('#about .sec-h2', t.about[3], true);
+  document.querySelectorAll('.about-text p').forEach((el, i) => el.textContent = t.about[i + 4]);
+  document.querySelectorAll('.dossier-row').forEach((row, i) => {
+    row.querySelector('.dr-k').textContent = t.dossier[i][0];
+    row.querySelector('.dr-v').textContent = t.dossier[i][1];
+  });
+  setText('.foot-name', t.footer[0]);
+  setText('.foot-sub', t.footer[1]);
+  setText('.foot-desc', t.footer[2]);
+  document.querySelectorAll('footer h4').forEach((el, i) => el.textContent = t.footer[i + 3]);
+  document.querySelectorAll('.foot-links a').forEach((el, i) => el.textContent = t.nav[i]);
+  document.querySelectorAll('.fi-k').forEach((el, i) => el.textContent = t.footer[i + 5]);
+  document.querySelectorAll('.fi-v').forEach((el, i) => {
+    const values = ['1113001181 | 7001666168','300992773700003',t.footer[8]];
+    el.textContent = values[i];
+  });
+  setText('.foot-copy', t.footer[9]);
+  document.querySelectorAll('.foot-iso').forEach((el, i) => el.textContent = t.iso[i]);
+  document.querySelectorAll('.lang-toggle button').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.lang === lang);
+    btn.textContent = lang === 'ar'
+      ? (btn.dataset.lang === 'ar' ? 'العربية' : 'الإنجليزية')
+      : (btn.dataset.lang === 'ar' ? 'Arabic' : 'English');
+  });
+  updateAiLanguage(lang);
+}
+
+document.querySelectorAll('.lang-toggle button').forEach(btn => {
+  btn.addEventListener('click', () => applyLanguage(btn.dataset.lang));
+});
+
+const aiCopy = {
+  ar: {
+    title:'مساعد تعمير الذكي',
+    sub:'اسأل عن الخدمات والمشاريع والاعتمادات',
+    hello:'مرحباً، أستطيع مساعدتك في معرفة خدمات الشركة ومشاريعها واعتماداتها.',
+    prompts:['الخدمات','المشاريع','الاعتمادات'],
+    promptValues:['ما خدمات الشركة؟','اعرض المشاريع','ما الاعتمادات؟'],
+    placeholder:'اكتب سؤالك هنا',
+    send:'إرسال',
+    note:'واجهة جاهزة للربط لاحقاً بخادم AI آمن. لا تضع مفتاح API داخل ملف HTML.',
+    empty:'اكتب سؤالك أولاً.',
+    services:'تقدم تعمير البيداء خدمات التشييد، الهندسة المدنية، ترميم وتأهيل المواقع، التشغيل والصيانة، التشطيبات المتخصصة، والمقاولات العامة.',
+    projects:'من أبرز المشاريع: تأهيل مواقع تراثية بشقراء واشيقر، مركز آثار فيد، موقع جبل يا طب بمنطقة حائل، مشروع سمو الأمير محمد بن سلمان لتطوير المساجد التاريخية بمنطقة حائل، تهيئة شاطئ جبل القنع بمحافظة القنفذة، والأعمال الإنقاذية العاجلة بقصر إبراهيم بمحافظة الأحساء.',
+    credentials:'تشمل الاعتمادات: السجل التجاري، ضريبة القيمة المضافة، شهادات ISO 9001 و ISO 14001 و ISO 45001، وتصنيف خدمات المدن.',
+    contact:'يمكنك استخدام قسم تواصل معنا أسفل الصفحة، أو تجهيز نموذج تواصل ذكي لاحقاً يرسل الطلب مباشرة.',
+    fallback:'أقدر أساعدك في الخدمات، المشاريع، الاعتمادات، أو معلومات التواصل. للردود الذكية الحقيقية نحتاج ربط هذه الواجهة بخادم AI آمن.'
+  },
+  en: {
+    title:'Tameer AI Assistant',
+    sub:'Ask about services, projects, and credentials',
+    hello:'Hello, I can help you learn about the company services, projects, and credentials.',
+    prompts:['Services','Projects','Credentials'],
+    promptValues:['What services do you provide?','Show projects','What credentials do you have?'],
+    placeholder:'Type your question here',
+    send:'Send',
+    note:'Ready to connect later to a secure AI backend. Do not place an API key inside HTML.',
+    empty:'Please type a question first.',
+    services:'Tameer Al-Baydaa provides construction, civil engineering, site restoration, operations and maintenance, specialized finishing, and general contracting.',
+    projects:'Selected projects include heritage sites in Shaqra and Ushaiqer, Fayd archaeology center, Jabal Ya Tab site in Hail, HRH Prince Mohammed bin Salman Project for the Development of Historic Mosques in Hail, Jabal Al-Qana Beach in Al-Qunfudhah, and urgent rescue works at Ibrahim Palace in Al-Ahsa.',
+    credentials:'Credentials include commercial registration, VAT number, ISO 9001, ISO 14001, ISO 45001, and municipal services classification.',
+    contact:'You can use the contact section at the bottom, or later add a smart contact form that prepares and sends requests.',
+    fallback:'I can help with services, projects, credentials, or contact details. For true AI answers, this widget needs a secure backend connection.'
+  }
+};
+
+let currentLang = document.documentElement.lang || 'ar';
+const aiWidget = document.getElementById('aiWidget');
+const aiMessages = document.getElementById('aiMessages');
+const aiInput = document.getElementById('aiInput');
+
+function addAiMessage(text, type='bot') {
+  const msg = document.createElement('div');
+  msg.className = `ai-msg ${type}`;
+  msg.textContent = text;
+  aiMessages.appendChild(msg);
+  aiMessages.scrollTop = aiMessages.scrollHeight;
+}
+
+function getAiReply(text) {
+  const q = text.toLowerCase();
+  const c = aiCopy[currentLang];
+  if (/خدم|service|construction|ترميم|صيانة|مقاول/.test(q)) return c.services;
+  if (/مشاريع|مشروع|project|وزارة|ministry|culture|tourism|mewa/.test(q)) return c.projects;
+  if (/اعتماد|iso|آيزو|سجل|ضريب|credential|certificate|vat/.test(q)) return c.credentials;
+  if (/تواصل|contact|email|phone|رقم/.test(q)) return c.contact;
+  return c.fallback;
+}
+
+async function getAiReplyAsync(text) {
+  if (location.protocol === 'file:') return getAiReply(text);
+  try {
+    const res = await fetch('/api/chat', {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({ message:text, lang:currentLang })
+    });
+    if (!res.ok) throw new Error('AI request failed');
+    const data = await res.json();
+    return data.reply || getAiReply(text);
+  } catch (error) {
+    return getAiReply(text);
+  }
+}
+
+function updateAiLanguage(lang) {
+  currentLang = lang;
+  const c = aiCopy[lang];
+  setText('.ai-title', c.title);
+  setText('.ai-sub', c.sub);
+  setText('.ai-note', c.note);
+  setText('.ai-send', c.send);
+  aiInput.placeholder = c.placeholder;
+  document.querySelectorAll('.ai-prompts button').forEach((btn, i) => {
+    btn.textContent = c.prompts[i];
+    btn.dataset.prompt = c.promptValues[i];
+  });
+  if (aiMessages.children.length === 1 && aiMessages.firstElementChild.classList.contains('bot')) {
+    aiMessages.firstElementChild.textContent = c.hello;
+  }
+}
+
+document.querySelector('.ai-toggle').addEventListener('click', () => {
+  aiWidget.classList.toggle('open');
+  if (aiWidget.classList.contains('open')) aiInput.focus();
+});
+document.querySelector('.ai-close').addEventListener('click', () => aiWidget.classList.remove('open'));
+document.querySelectorAll('.ai-prompts button').forEach(btn => {
+  btn.addEventListener('click', async () => {
+    aiWidget.classList.add('open');
+    addAiMessage(btn.dataset.prompt, 'user');
+    addAiMessage(await getAiReplyAsync(btn.dataset.prompt));
+  });
+});
+document.getElementById('aiForm').addEventListener('submit', async e => {
+  e.preventDefault();
+  const text = aiInput.value.trim();
+  if (!text) return addAiMessage(aiCopy[currentLang].empty);
+  aiInput.value = '';
+  addAiMessage(text, 'user');
+  addAiMessage(await getAiReplyAsync(text));
+});
+updateAiLanguage(currentLang);
+
+const prog = document.getElementById('prog');
+window.addEventListener('scroll', () => {
+  prog.style.width = (scrollY / (document.body.scrollHeight - innerHeight) * 100) + '%';
+}, {passive:true});
+
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => {
+  const y = window.scrollY;
+  if (y > 50) nav.classList.add('scrolled'); else nav.classList.remove('scrolled');
+}, {passive:true});
+
+const io = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }});
+}, {threshold:.1, rootMargin:'0px 0px -36px 0px'});
+document.querySelectorAll('.rev').forEach(el => io.observe(el));
+</script>
+</body>
+</html>
